@@ -33,7 +33,7 @@ public class PedidoServiceImpl implements PedidoService {
                 .findFirst()
                 .orElseThrow(NaoExisteException::new);
 
-        var domain = new Pedido(farmaceutico,cliente);
+        var domain = new Pedido();
         pedidoRepository.cadastrar(domain);
 
     }
