@@ -21,7 +21,10 @@ public class FarmaceuticoController {
     public List<Farmaceutico> consultar() {
         return FarmaceuticoService.consultar();
     }
-
+    @PostMapping
+    public Farmaceutico cadastrarRandom(){
+        return FarmaceuticoService.cadastrarRandom()
+    }
 
     @PostMapping("/cadastrar")
     public Farmaceutico cadastrar(@RequestBody FarmaceuticoModel model) {

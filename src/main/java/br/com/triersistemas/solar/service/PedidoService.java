@@ -14,7 +14,7 @@ public interface PedidoService {
 
     Pedido consultar(UUID id);
 
-    Pedido cadastrar(PedidoModel mode);
+    Pedido cadastrar(PedidoModel model);
 
     Pedido Adicionar(UUID id, PagarPedidoModel model);
 

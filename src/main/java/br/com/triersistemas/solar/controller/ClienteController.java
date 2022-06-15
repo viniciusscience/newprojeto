@@ -31,7 +31,7 @@ public class ClienteController {
     }
 
     @PutMapping("/alterar/{id}")
-    public Cliente remover(@PathVariable UUID id, @RequestBody ClienteModel model) {
+    public Cliente alterar(@PathVariable UUID id, @RequestBody ClienteModel model) {
         return clienteService.alterar(id, model);
     }
 

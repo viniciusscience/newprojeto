@@ -18,6 +18,10 @@ public class Farmaceutico extends PessoaFisica {
         this.promocaoDia = StringUtils.getRandomMedicine();
     }
 
+    public Farmaceutico(){
+
+    }
+
     public String getPromocaoDia() {
         return promocaoDia;
     }

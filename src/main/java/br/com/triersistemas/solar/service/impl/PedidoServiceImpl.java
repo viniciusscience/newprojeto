@@ -1,41 +1,49 @@
 package br.com.triersistemas.solar.service.impl;
 
-import br.com.triersistemas.solar.controller.ClienteController;
-import br.com.triersistemas.solar.controller.FarmaceuticoController;
-import br.com.triersistemas.solar.domain.Cliente;
-import br.com.triersistemas.solar.domain.Farmaceutico;
+
 import br.com.triersistemas.solar.domain.Pedido;
+import br.com.triersistemas.solar.domain.Produto;
 import br.com.triersistemas.solar.exceptions.NaoExisteException;
+import br.com.triersistemas.solar.model.AdicionarPedidoModel;
 import br.com.triersistemas.solar.model.PagarPedidoModel;
 import br.com.triersistemas.solar.model.PedidoModel;
 import br.com.triersistemas.solar.repository.PedidoRepository;
+import br.com.triersistemas.solar.service.ClienteService;
+import br.com.triersistemas.solar.service.FarmaceuticoService;
 import br.com.triersistemas.solar.service.PedidoService;
+import br.com.triersistemas.solar.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+
 @Service
 public class PedidoServiceImpl implements PedidoService {
 
     @Autowired
-    PedidoRepository pedidoRepository;
-
+    private PedidoRepository pedidoRepository;
+    @Autowired
+    private FarmaceuticoService farmaceuticoService;
+    @Autowired
+    private ClienteService clienteService;
+    @Autowired
+    private ProdutoService produtoService;
 
     @Override
     public Pedido cadastrar(PedidoModel model) {
-        var farmaceutico = pedidoRepository.consultar().stream()
-                .filter(f -> f.getId().equals(model.getIdFarmaceutico()))
-                .findFirst()
-                .orElseThrow(NaoExisteException::new);
-        var cliente = pedidoRepository.consultar().stream()
-                .filter(f -> f.getId().equals(model.getIdCliente()))
-                .findFirst()
-                .orElseThrow(NaoExisteException::new);
+        var farmaceutico = farmaceuticoService.consultar(model.getIdFarmaceutico());
+        var cliente = clienteService.consultar(model.getIdCliente());
+        var pedido = new Pedido(farmaceutico, cliente);
+        pedidoRepository.cadastrar(pedido);
+        return pedido;
+    }
 
-        var domain = new Pedido();
-        pedidoRepository.cadastrar(domain);
-
+    @Override
+    public Pedido Adicionar(UUID id, PagarPedidoModel model) {
+        Pedido pedido = this.consultar(id);
+        Produto produtos = produtoService.consultar(model.getIdProdutos());
+        return pedido.adicionarProdutos(produtos);
     }
 
     @Override
@@ -48,11 +56,6 @@ public class PedidoServiceImpl implements PedidoService {
         return pedidoRepository.consultar(id).orElseThrow(NaoExisteException::new);
     }
 
-
-    @Override
-    public Pedido Adicionar(UUID id, PagarPedidoModel model) {
-        return null;
-    }
 
     @Override
     public Pedido Pagar(UUID id, PagarPedidoModel model) {

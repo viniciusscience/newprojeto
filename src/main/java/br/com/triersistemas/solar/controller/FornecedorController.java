@@ -3,6 +3,8 @@ package br.com.triersistemas.solar.controller;
 import br.com.triersistemas.solar.domain.Fornecedor;
 import br.com.triersistemas.solar.exceptions.NaoExisteException;
 import br.com.triersistemas.solar.model.FornecedorModel;
+import br.com.triersistemas.solar.service.FornecedorService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -13,11 +15,12 @@ import java.util.UUID;
 @RequestMapping("/fornecedor")
 public class FornecedorController {
 
-    public static final List<Fornecedor> LIST = new ArrayList<>();
+   @Autowired
+   private FornecedorService fornecedorService;
 
     @GetMapping("/consultar")
     public List<Fornecedor> consultar() {
-        return LIST;
+        return fornecedorService.
     }
 
     @PostMapping("/cadastrar-randon")

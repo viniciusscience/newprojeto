@@ -46,4 +46,5 @@ public class ProdutoServiceImpl implements ProdutoService {
         produtoRepository.remover(produto);
         return produto;
     }
+
 }

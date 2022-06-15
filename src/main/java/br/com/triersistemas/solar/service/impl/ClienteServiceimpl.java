@@ -30,13 +30,15 @@ public class ClienteServiceimpl implements ClienteService {
     @Override
     public Cliente cadastrar(ClienteModel model) {
         Cliente cliente = new Cliente(model.getNome(), model.getAniver(), model.getCpf(), model.getEmail());
+        clienteRepository.cadastrar(cliente);
         return cliente;
     }
 
     @Override
     public Cliente alterar(UUID id, ClienteModel model) {
         Cliente cliente = this.consultar(id);
-        return cliente.editar(model.getNome(), model.getAniver(), model.getCpf(), model.getEmail());
+        cliente.editar(model.getNome(), model.getAniver(), model.getCpf(), model.getEmail());
+        return cliente;
     }
 
     @Override

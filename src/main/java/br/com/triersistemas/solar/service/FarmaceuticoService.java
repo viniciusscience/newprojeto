@@ -20,4 +20,6 @@ public interface FarmaceuticoService {
     Farmaceutico alterar(UUID id, FarmaceuticoModel model);
 
     Farmaceutico remover(UUID id);
+
+    Farmaceutico cadastrarRandom();
 }

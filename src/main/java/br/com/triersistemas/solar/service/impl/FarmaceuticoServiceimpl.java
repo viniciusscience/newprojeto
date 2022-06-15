@@ -38,7 +38,9 @@ public class FarmaceuticoServiceimpl implements FarmaceuticoService {
 
     @Override
     public Farmaceutico alterar(UUID id, FarmaceuticoModel model) {
-        return null;
+        var farmaceutico = this.consultar(id);
+        farmaceutico.editar(model.getNome(),model.getAniver(), model.getCpf());
+        return farmaceutico;
     }
 
 
@@ -48,5 +50,12 @@ public class FarmaceuticoServiceimpl implements FarmaceuticoService {
         farmaceuticoRepository.remover(farmaceutico);
         return farmaceutico;
 
+    }
+
+    @Override
+    public Farmaceutico cadastrarRandom() {
+        Farmaceutico farmaceutico = new Farmaceutico();
+        farmaceuticoRepository.cadastrar(farmaceutico);
+        return farmaceutico;
     }
 }
